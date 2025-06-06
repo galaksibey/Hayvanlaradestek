@@ -8,77 +8,63 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #f0f8ff;
-      margin: 0; padding: 0;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      color: #333;
-    }
-    header, footer {
-      background-color: #4CAF50;
-      color: white;
-      padding: 1rem;
-      text-align: center;
-    }
-    main {
-      flex: 1;
-      padding: 1rem;
       max-width: 600px;
       margin: auto;
+      padding: 20px;
+      text-align: center;
     }
-    h1, h2 {
-      margin-bottom: 0.5rem;
-    }
-    button.donate-btn {
+    button {
       background-color: #4CAF50;
       color: white;
+      padding: 15px 25px;
+      font-size: 16px;
       border: none;
-      padding: 15px 30px;
-      font-size: 1.2rem;
-      border-radius: 8px;
+      border-radius: 5px;
       cursor: pointer;
       margin-top: 20px;
-      transition: background-color 0.3s ease;
     }
-    button.donate-btn:hover {
-      background-color: #388E3C;
+    button:hover {
+      background-color: #45a049;
     }
-    a {
-      color: #4CAF50;
-      text-decoration: none;
+    #installBtn {
+      display: none;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>HayvanlaraDestek</h1>
-    <p>Sokak hayvanlarına destek olmak için günlük görevler yapın ve bağışta bulunun.</p>
-  </header>
+  <h1>HayvanlaraDestek</h1>
+  <p>Günlük görev yaparak sokak hayvanlarına destek olun!</p>
 
-  <main>
-    <section>
-      <h2>Günlük Görev</h2>
-      <p>Her gün küçük bir görev yaparak sokak hayvanlarına yardım edin. Kampanyamıza katılarak sevgiyle destek olun!</p>
-    </section>
+  <!-- Bağış Butonu -->
+  <button onclick="window.open('https://www.example.com/donate', '_blank')">
+    Bağış Yap
+  </button>
 
-    <section>
-      <h2>Bağış Yap</h2>
-      <p>Küçük bir bütçe ile destek olmak isteyenler aşağıdaki butona tıklayarak katkıda bulunabilir:</p>
-      <button class="donate-btn" onclick="window.open('https://www.example.com/donate', '_blank')">Bağış Yap</button>
-      <p style="margin-top: 1rem;">İstersen doğrudan aşağıdaki IBAN’a da havale yapabilirsiniz:</p>
-      <p><strong>IBAN:</strong> TR88 0021 3000 0938 7241 6000 01</p>
-    </section>
-  </main>
-
-  <footer>
-    <p>© 2025 HayvanlaraDestek | Tüm Hakları Saklıdır</p>
-  </footer>
+  <!-- PWA Yükleme Butonu -->
+  <button id="installBtn">Uygulamayı Yükle</button>
 
   <script>
+    let deferredPrompt;
+    const installBtn = document.getElementById('installBtn');
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      deferredPrompt = e;
+      installBtn.style.display = 'inline-block';
+
+      installBtn.addEventListener('click', () => {
+        installBtn.style.display = 'none';
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then(() => {
+          deferredPrompt = null;
+        });
+      });
+    });
+
+    // Service Worker kaydı
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js')
-        .then(() => console.log('Service Worker Registered'))
+      navigator.serviceWorker.register('/sw.js')
+        .then(() => console.log('Service Worker registered'))
         .catch(err => console.log('Service Worker registration failed:', err));
     }
   </script>

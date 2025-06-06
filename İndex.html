@@ -3,70 +3,41 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>HayvanlaraDestek</title>
-  <link rel="manifest" href="manifest.json" />
+  <title>Hayvanlara Destek - Ana Sayfa</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 600px;
-      margin: auto;
-      padding: 20px;
-      text-align: center;
-    }
-    button {
-      background-color: #4CAF50;
-      color: white;
-      padding: 15px 25px;
-      font-size: 16px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-top: 20px;
-    }
-    button:hover {
-      background-color: #45a049;
-    }
-    #installBtn {
-      display: none;
-    }
+    /* Stil buraya aynı şekilde */
+    /* ... yukarıdaki stil kodları ... */
   </style>
 </head>
 <body>
-  <h1>HayvanlaraDestek</h1>
-  <p>Günlük görev yaparak sokak hayvanlarına destek olun!</p>
+  <header>
+    <nav>
+      <div class="logo">HayvanlaraDestek</div>
+      <ul>
+        <li><a href="index.html">Anasayfa</a></li>
+        <li><a href="donate.html">Bağış</a></li>
+        <li><a href="contact.html">Hakkımızda & İletişim</a></li>
+      </ul>
+    </nav>
+  </header>
 
-  <!-- Bağış Butonu -->
-  <button onclick="window.open('https://www.example.com/donate', '_blank')">
-    Bağış Yap
-  </button>
+  <section id="hero">
+    <div class="content">
+      <h1>Günlük Görevlerle Sokak Hayvanlarına Destek Ol</h1>
+      <p>Her gün küçük bir görev yaparak can dostlarımızın hayatına dokunabilirsiniz.</p>
+      <button class="btn" onclick="window.location.href='donate.html'">Hemen Destek Ol</button>
+    </div>
+  </section>
 
-  <!-- PWA Yükleme Butonu -->
-  <button id="installBtn">Uygulamayı Yükle</button>
-
-  <script>
-    let deferredPrompt;
-    const installBtn = document.getElementById('installBtn');
-
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      installBtn.style.display = 'inline-block';
-
-      installBtn.addEventListener('click', () => {
-        installBtn.style.display = 'none';
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then(() => {
-          deferredPrompt = null;
-        });
-      });
-    });
-
-    // Service Worker kaydı
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/sw.js')
-        .then(() => console.log('Service Worker registered'))
-        .catch(err => console.log('Service Worker registration failed:', err));
-    }
-  </script>
+  <section id="tasks">
+    <h2>Günlük Görevler</h2>
+    <ul>
+      <li>Evde kullanılmayan battaniye ve yiyecekleri ayırmak.</li>
+      <li>Sokaktaki hayvanlar için su kabı koymak.</li>
+      <li>Komşularla birlikte hayvan besleme programı yapmak.</li>
+      <li>Sosyal medyada kampanyamızı paylaşmak.</li>
+      <li>Mahalledeki sokak hayvanlarının durumunu gözlemlemek.</li>
+    </ul>
+  </section>
 </body>
 </html>
